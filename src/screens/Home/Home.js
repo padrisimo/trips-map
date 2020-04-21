@@ -1,67 +1,40 @@
-import React from 'react';
-import './Home.css';
-import { Layout } from 'antd';
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  CarOutlined,
-  PushpinOutlined
-} from '@ant-design/icons';
+import React,  { useState } from 'react';
 
 import Menu from 'components/Menu';
+import Logo from 'components/Logo';
+import Trigger from 'components/Trigger';
+import Avatar from 'components/Avatar';
+import { Main, Header, Layout, Aside, Content } from 'components/Layout';
 
-const { Header, Sider, Content } = Layout;
+import profile from 'constants/profile';
 
 
-class Home extends React.Component {
-  state = {
-    collapsed: false
+function Home() {
+  const [collapsed, setCollapsed] = useState(false);
+  const toggle = () => {
+    setCollapsed(!collapsed);
   };
-
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  };
-
-  render() {
-    return (
-      <Layout>
-        <Sider
-          width={300}
-          collapsedWidth="0"
-          trigger={null}
-          collapsible
-          collapsed={this.state.collapsed}
-        >
-          <div className="logo">Trips Map</div>
-          <Menu />
-        </Sider>
-        <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 }}>
-            {React.createElement(
-              this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-              {
-                className: 'trigger',
-                onClick: this.toggle
-              }
-            )}
-          </Header>
-          <Content
-            className="site-layout-background"
-            style={{
-              margin: '24px 16px',
-              padding: 24,
-              minHeight: 280,
-              overflow: 'hidden'
-            }}
-          >
-            Content
-          </Content>
-        </Layout>
-      </Layout>
-    );
-  }
-} 
+  return (
+    <Layout>
+      <Aside
+        width={300}
+        collapsedWidth="0"
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+      >
+        <Logo>Trips Map</Logo>
+        <Menu />
+      </Aside>
+      <Main>
+        <Header>
+          <Trigger collapsed={collapsed} onClick={toggle} />
+          <Avatar img={profile.img} link={profile.link} />
+        </Header>
+        <Content>Map Here</Content>
+      </Main>
+    </Layout>
+  );
+}
 
 export default Home;
