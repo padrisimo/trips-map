@@ -11,23 +11,22 @@ const Header = styled(Layout.Header)`
   background: ${colors.walter};
   padding: 0;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   padding: 0 1.5rem;
   align-items: center;
 `;
 
 const Aside = Layout.Sider;
 
-const Content = styled((props) => <Layout.Content {...props}/>)`
+const Content = styled((props) => <Layout.Content {...props} />)`
   background: ${colors.walter};
-  margin: 1.5rem 1rem;
-  padding: 1.5rem;
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  position: relative;
   @media (max-width: 414px) {
-    display: ${({collapsed}) => (collapsed ? 'block' : 'none')};
+    display: ${({ collapsed }) => (collapsed ? 'block' : 'none')};
   }
 `;
 

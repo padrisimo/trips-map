@@ -1,4 +1,5 @@
 export default {
   blue: '#1890ff',
-  walter: '#fff'
+  walter: '#fff',
+  darkBlue: '#00152A'
 }

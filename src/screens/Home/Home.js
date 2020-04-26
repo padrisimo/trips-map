@@ -1,13 +1,13 @@
-import React,  { useState } from 'react';
+import React, { useState } from 'react';
 
 import Menu from 'components/Menu';
 import Logo from 'components/Logo';
 import Trigger from 'components/Trigger';
 import Avatar from 'components/Avatar';
 import { Main, Header, Layout, Aside, Content } from 'components/Layout';
+import MapView from 'components/MapView';
 
 import profile from 'constants/profile';
-
 
 function Home() {
   const [collapsed, setCollapsed] = useState(false);
@@ -31,7 +31,9 @@ function Home() {
           <Trigger collapsed={collapsed} onClick={toggle} />
           <Avatar collapsed={collapsed} img={profile.img} link={profile.link} />
         </Header>
-        <Content collapsed={collapsed ? 1 : 0}>Map Here</Content>
+        <Content collapsed={collapsed ? 1 : 0}>
+          <MapView />
+        </Content>
       </Main>
     </Layout>
   );
