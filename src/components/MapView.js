@@ -1,19 +1,10 @@
 import React from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import styled from 'styled-components';
 
 function MapView(props) {
-
   return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        flexFlow: 'row nowrap',
-        justifyContent: 'center',
-        padding: 0,
-        height: '100%'
-      }}
-    >
+    <Container>
       <Map
         google={props.google}
         zoom={14}
@@ -24,10 +15,19 @@ function MapView(props) {
       >
         <Marker position={{ lat: 48.0, lng: -122.0 }} />
       </Map>
-    </div>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  padding: 0;
+  height: 100%;
+`;
+
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyD1aCwKJ42a5xoT7lk4EEgdHueW0vMY8TA'
+  apiKey: process.env.REACT_APP_MAP_KEY
 })(MapView);

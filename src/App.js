@@ -1,13 +1,15 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 
-import Home from 'screens/Home';
+import { Provider } from 'context/TripsContext';
+import HomeContainer from 'containers/HomeContainer';
 
 function App() {
-  return (
-    
-      <Home />
-  );
+  return <HomeContainer />;
 }
 
-export default App;
+export default () => (
+  <Provider>
+    <App />
+  </Provider>
+);
