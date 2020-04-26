@@ -29,9 +29,9 @@ function Home() {
       <Main>
         <Header>
           <Trigger collapsed={collapsed} onClick={toggle} />
-          <Avatar img={profile.img} link={profile.link} />
+          <Avatar collapsed={collapsed} img={profile.img} link={profile.link} />
         </Header>
-        <Content>Map Here</Content>
+        <Content collapsed={collapsed ? 1 : 0}>Map Here</Content>
       </Main>
     </Layout>
   );

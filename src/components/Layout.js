@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import colors from 'constants/colors';
 import { Layout } from 'antd';
@@ -17,7 +18,7 @@ const Header = styled(Layout.Header)`
 
 const Aside = Layout.Sider;
 
-const Content = styled(Layout.Content)`
+const Content = styled((props) => <Layout.Content {...props}/>)`
   background: ${colors.walter};
   margin: 1.5rem 1rem;
   padding: 1.5rem;
@@ -25,6 +26,9 @@ const Content = styled(Layout.Content)`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 414px) {
+    display: ${({collapsed}) => (collapsed ? 'block' : 'none')};
+  }
 `;
 
 export { Main, Header, Layout, Aside, Content };
