@@ -8,9 +8,11 @@ import { Main, Header, Layout, Aside, Content } from 'components/Layout';
 import MapView from 'components/MapView';
 
 import profile from 'constants/profile';
+import InfoTrip from 'components/InfoTrip';
 
-function Home() {
+function Home({ trips }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [activeTrip, setActiveTrip] = useState(null);
   const toggle = () => {
     setCollapsed(!collapsed);
   };
@@ -24,7 +26,8 @@ function Home() {
         collapsed={collapsed}
       >
         <Logo>Trips Map</Logo>
-        <Menu />
+        <Menu trips={trips} selectTrip={setActiveTrip} />
+        {activeTrip && <InfoTrip activeTrip={activeTrip} />}
       </Aside>
       <Main>
         <Header>

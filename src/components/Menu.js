@@ -4,56 +4,38 @@ import { CarOutlined, PushpinOutlined } from '@ant-design/icons';
 
 const { SubMenu, Item } = AntdMenu;
 
-export default function Menu() {
-  return (
-    <AntdMenu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-      <Item key="1">
-        <CarOutlined />
-        <span>nav 1</span>
+export default function Menu({ trips, selectTrip }) {
+  if (!trips) return null;
+
+  const renderStopsList = (stops, routeId) =>
+    stops.map((stop, i) => (
+      <Item key={stop.id + routeId }>
+        <span>
+          <PushpinOutlined />
+          <span>Stop {i + 1}</span>
+        </span>
       </Item>
-      <Item key="2">
-        <CarOutlined />
-        <span>nav 2</span>
-      </Item>
-      <Item key="3">
-        <CarOutlined />
-        <span>nav 3</span>
-      </Item>
+    ));
+
+  const renderTripList = () =>
+    trips.map((trip, i) => (
       <SubMenu
-        key="sub1"
-        onTitleClick={() => console.log('yea')}
+        key={trip.driverName + i}
+        onTitleClick={() => selectTrip(trip)}
         title={
           <span>
             <CarOutlined />
-            <span>Navigation One</span>
+            <span>{trip.description}</span>
           </span>
         }
       >
-        <Item key="13">
-          <span>
-            <PushpinOutlined />
-            <span>Stop</span>
-          </span>
-        </Item>
-        <Item key="23">
-          <span>
-            <PushpinOutlined />
-            <span>Stop</span>
-          </span>
-        </Item>
-        <Item key="33">
-          <span>
-            <PushpinOutlined />
-            <span>Stop</span>
-          </span>
-        </Item>
-        <Item key="43">
-          <span>
-            <PushpinOutlined />
-            <span>Stop</span>
-          </span>
-        </Item>
+        {renderStopsList(trip.stops, trip.route)}
       </SubMenu>
+    ));
+
+  return (
+    <AntdMenu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+      {renderTripList()}
     </AntdMenu>
   );
 }

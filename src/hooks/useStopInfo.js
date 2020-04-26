@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { trips as api } from 'api/trips';
+import api from 'api/trips';
+import { STOP_FAIL } from 'constants/vars';
 
 export default () => {
   const [result, setResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const getStopInfo = async stopId => {
+  const getStopInfo = async (stopId) => {
     try {
       const response = await api.get(`/stops/${stopId}`);
 
       setResult(response.data);
     } catch (error) {
-      setErrorMessage("ups info not found :(");
+      setErrorMessage(STOP_FAIL);
     }
   };
 

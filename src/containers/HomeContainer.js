@@ -12,15 +12,13 @@ function HomeContainer() {
     getTripsList();
   }, []);
 
-  if(state.error) return <ErrorScreen msg={state.error}/>
+  console.log(state);
+
+  if (state.error) return <ErrorScreen msg={state.error} />;
 
   if (!state.results && state.loading) return <Spinner />;
 
-  return (
-    <>
-      <Home />
-    </>
-  );
+  return <Home trips={state.results} />;
 }
 
 export default HomeContainer;
