@@ -9,7 +9,7 @@ export default function Menu({ trips, selectTrip }) {
 
   const renderStopsList = (stops, routeId) =>
     stops.map((stop, i) => (
-      <Item key={stop.id + routeId }>
+      <Item key={stop.id} >
         <span>
           <PushpinOutlined />
           <span>Stop {i + 1}</span>
@@ -17,21 +17,34 @@ export default function Menu({ trips, selectTrip }) {
       </Item>
     ));
 
-  const renderTripList = () =>
-    trips.map((trip, i) => (
-      <SubMenu
-        key={trip.driverName + i}
-        onTitleClick={() => selectTrip(trip)}
-        title={
-          <span>
-            <CarOutlined />
-            <span>{trip.description}</span>
-          </span>
-        }
-      >
-        {renderStopsList(trip.stops, trip.route)}
-      </SubMenu>
-    ));
+  const renderTripList = () => {
+    return trips.map((trip, i) => {
+      if (trip.stops.length === 1)
+        return (
+          <Item key={trip.driverName + i} onClick={() => selectTrip(trip)}>
+            <span>
+              <CarOutlined />
+              <span>{trip.description}</span>
+            </span>
+          </Item>
+        );
+
+      return (
+        <SubMenu
+          key={trip.driverName + i}
+          onTitleClick={() => selectTrip(trip)}
+          title={
+            <span>
+              <CarOutlined />
+              <span>{trip.description}</span>
+            </span>
+          }
+        >
+          {renderStopsList(trip.stops)}
+        </SubMenu>
+      );
+    });
+  };
 
   return (
     <AntdMenu theme="dark" mode="inline" defaultSelectedKeys={['1']}>

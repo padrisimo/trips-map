@@ -2,18 +2,54 @@ import React from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import styled from 'styled-components';
 
-function MapView(props) {
+function MapView({ google, activeTrip }) {
+  const renderStopMarkers = () => {
+    if (!activeTrip || activeTrip.stops.length == 1) return null;
+    return activeTrip.stops.map((stop) => (
+      <Marker
+        key={stop.id}
+        position={{ lat: stop.point._latitude, lng: stop.point._longitude }}
+      />
+    ));
+  };
+
+  const arc = { lat: 41.3910524, lng: 2.1806449 };
+
+  const renderCenter = activeTrip
+    ? {
+        lat: activeTrip.destination.point._latitude,
+        lng: activeTrip.destination.point._longitude
+      }
+    : arc;
+
   return (
     <Container>
       <Map
-        google={props.google}
-        zoom={14}
+        google={google}
+        zoom={13}
         mapTypeControl={false}
         streetViewControl={false}
         fullscreenControl={false}
-        initialCenter={{ lat: 47.444, lng: -122.176 }}
+        center={renderCenter}
+        initialCenter={arc}
       >
-        <Marker position={{ lat: 48.0, lng: -122.0 }} />
+        {activeTrip && (
+          <Marker
+            position={{
+              lat: activeTrip.destination.point._latitude,
+              lng: activeTrip.destination.point._longitude
+            }}
+          />
+        )}
+        {renderStopMarkers()}
+        {activeTrip && (
+          <Marker
+            position={{
+              lat: activeTrip.origin.point._latitude,
+              lng: activeTrip.origin.point._longitude
+            }}
+          />
+        )}
       </Map>
     </Container>
   );

@@ -35,7 +35,7 @@ function Home({ trips }) {
           <Avatar collapsed={collapsed} img={profile.img} link={profile.link} />
         </Header>
         <Content collapsed={collapsed ? 1 : 0}>
-          <MapView />
+          <MapView activeTrip={activeTrip} />
         </Content>
       </Main>
     </Layout>
