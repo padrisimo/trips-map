@@ -18,6 +18,14 @@ const Header = styled(Layout.Header)`
 
 const Aside = Layout.Sider;
 
+const AsideContent = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll;
+`;
+
 const Content = styled((props) => <Layout.Content {...props} />)`
   background: ${colors.walter};
   overflow: hidden;
@@ -30,4 +38,4 @@ const Content = styled((props) => <Layout.Content {...props} />)`
   }
 `;
 
-export { Main, Header, Layout, Aside, Content };
+export { Main, Header, Layout, Aside,AsideContent, Content };

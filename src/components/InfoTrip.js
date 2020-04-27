@@ -19,8 +19,6 @@ function InfoTrip({ activeTrip }) {
 
 const Container = styled.div`
   color: white;
-  position: absolute;
-  bottom: 0;
   background: ${colors.jack};
   padding: 2rem;
   font-size: .8rem;

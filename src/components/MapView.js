@@ -2,11 +2,12 @@ import React from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import styled from 'styled-components';
 
-function MapView({ google, activeTrip }) {
+function MapView({ google, activeTrip, handleMarkerClick }) {
   const renderStopMarkers = () => {
-    if (!activeTrip || activeTrip.stops.length == 1) return null;
+    if (!activeTrip || activeTrip.stops.length === 1) return null;
     return activeTrip.stops.map((stop) => (
       <Marker
+        onClick={() => handleMarkerClick(stop.id)}
         key={stop.id}
         position={{ lat: stop.point._latitude, lng: stop.point._longitude }}
       />
@@ -26,7 +27,7 @@ function MapView({ google, activeTrip }) {
     <Container>
       <Map
         google={google}
-        zoom={13}
+        zoom={11}
         mapTypeControl={false}
         streetViewControl={false}
         fullscreenControl={false}

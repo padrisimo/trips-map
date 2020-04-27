@@ -4,5 +4,6 @@ const STOP_FAIL = 'ups, there is no info for this stop'
 
 export {
   TRIPS_API_URI,
-  ERROR_MSG
+  ERROR_MSG,
+  STOP_FAIL
 };
