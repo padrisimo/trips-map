@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../context/TripsContext';
 
 import Home from 'screens/Home';
@@ -12,11 +12,9 @@ function HomeContainer() {
     getTripsList();
   }, []);
 
-  console.log(state);
-
   if (state.error) return <ErrorScreen msg={state.error} />;
 
-  if (!state.results && state.loading) return <Spinner />;
+  if (!state.results || state.loading) return <Spinner />;
 
   return <Home trips={state.results} />;
 }

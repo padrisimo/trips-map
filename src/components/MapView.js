@@ -1,8 +1,18 @@
-import React from 'react';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import React, { useEffect } from 'react';
+import { Map, GoogleApiWrapper, Marker, Polyline } from 'google-maps-react';
 import styled from 'styled-components';
+import { ARC } from 'constants/vars';
+import colors from 'constants/colors';
+import usePathLine from 'hooks/usePathLine';
 
 function MapView({ google, activeTrip, handleMarkerClick }) {
+  const [getPathCoords, path] = usePathLine();
+
+  useEffect(() => {
+    if (!activeTrip) return;
+    getPathCoords(activeTrip);
+  }, [activeTrip]);
+
   const renderStopMarkers = () => {
     if (!activeTrip || activeTrip.stops.length === 1) return null;
     return activeTrip.stops.map((stop) => (
@@ -14,44 +24,40 @@ function MapView({ google, activeTrip, handleMarkerClick }) {
     ));
   };
 
-  const arc = { lat: 41.3910524, lng: 2.1806449 };
-
   const renderCenter = activeTrip
     ? {
         lat: activeTrip.destination.point._latitude,
         lng: activeTrip.destination.point._longitude
       }
-    : arc;
+    : ARC;
 
   return (
     <Container>
-      <Map
-        google={google}
-        zoom={11}
-        mapTypeControl={false}
-        streetViewControl={false}
-        fullscreenControl={false}
-        center={renderCenter}
-        initialCenter={arc}
-      >
-        {activeTrip && (
+      {activeTrip ? (
+        <GoogleMap google={google} center={renderCenter} initialCenter={ARC}>
+          <Polyline
+            path={path}
+            strokeColor={colors.russian}
+            strokeOpacity={1.0}
+            strokeWeight={2}
+          />
           <Marker
             position={{
               lat: activeTrip.destination.point._latitude,
               lng: activeTrip.destination.point._longitude
             }}
           />
-        )}
-        {renderStopMarkers()}
-        {activeTrip && (
+          {renderStopMarkers()}
           <Marker
             position={{
               lat: activeTrip.origin.point._latitude,
               lng: activeTrip.origin.point._longitude
             }}
           />
-        )}
-      </Map>
+        </GoogleMap>
+      ) : (
+        <GoogleMap google={google} initialCenter={ARC} />
+      )}
     </Container>
   );
 }
@@ -64,6 +70,18 @@ const Container = styled.div`
   padding: 0;
   height: 100%;
 `;
+
+const GoogleMap = ({ children = null, ...rest }) => (
+  <Map
+    zoom={11}
+    mapTypeControl={false}
+    streetViewControl={false}
+    fullscreenControl={false}
+    {...rest}
+  >
+    {children}
+  </Map>
+);
 
 export default GoogleApiWrapper({
   apiKey: process.env.REACT_APP_MAP_KEY

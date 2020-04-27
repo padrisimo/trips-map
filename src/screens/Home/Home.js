@@ -17,7 +17,7 @@ import {
 import MapView from 'components/MapView';
 import InfoTrip from 'components/InfoTrip';
 import Modal from 'components/Modal';
-import StopErrorMsg from 'components/StopErrorMsg'
+import StopErrorMsg from 'components/StopErrorMsg';
 
 import profile from 'constants/profile';
 
@@ -29,12 +29,12 @@ function Home({ trips }) {
 
   useEffect(() => {
     if (!result) return;
-    setstopInfo(result)
+    setstopInfo(result);
   }, [result]);
 
   useEffect(() => {
     if (!errorMessage) return;
-    StopErrorMsg(errorMessage)
+    StopErrorMsg(errorMessage);
     clearErrorMessage();
   }, [errorMessage]);
 
@@ -69,7 +69,11 @@ function Home({ trips }) {
           <Avatar collapsed={collapsed} img={profile.img} link={profile.link} />
         </Header>
         <Content collapsed={collapsed ? 1 : 0}>
-           <Modal visible={!!stopInfo} onCancel={() => setstopInfo(null)} data={stopInfo}/>
+          <Modal
+            visible={!!stopInfo}
+            onCancel={() => setstopInfo(null)}
+            data={stopInfo}
+          />
           <MapView
             activeTrip={activeTrip}
             handleMarkerClick={handleMarkerClick}
