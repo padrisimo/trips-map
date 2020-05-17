@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import useStopInfo from 'hooks/useStopInfo';
 
@@ -38,14 +38,15 @@ function Home({ trips }) {
     clearErrorMessage();
   }, [errorMessage]);
 
-  const handleMarkerClick = (stopId) => {
+  const handleMarkerClick = useCallback((stopId) => {
     if (!stopId) return;
     getStopInfo(stopId);
-  };
+  }, []);
 
   const toggle = () => {
     setCollapsed(!collapsed);
   };
+
   return (
     <Layout>
       <Aside

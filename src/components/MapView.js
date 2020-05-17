@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { Map, GoogleApiWrapper, Marker, Polyline } from 'google-maps-react';
 import styled from 'styled-components';
 import { ARC } from 'constants/vars';
 import colors from 'constants/colors';
 import usePathLine from 'hooks/usePathLine';
 
-function MapView({ google, activeTrip, handleMarkerClick }) {
+const MapView = memo(function MapView({ google, activeTrip, handleMarkerClick }) {
   const [getPathCoords, path] = usePathLine();
 
   useEffect(() => {
@@ -60,7 +60,7 @@ function MapView({ google, activeTrip, handleMarkerClick }) {
       )}
     </Container>
   );
-}
+});
 
 const Container = styled.div`
   width: 100%;
