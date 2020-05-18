@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import useStopInfo from 'hooks/useStopInfo';
+import { useHomeReducer, ACTIONS } from 'hooks/useHomeReducer';
 
 import Menu from 'components/Menu';
 import Logo from 'components/Logo';
@@ -22,14 +23,14 @@ import StopErrorMsg from 'components/StopErrorMsg';
 import profile from 'constants/profile';
 
 function Home({ trips }) {
-  const [collapsed, setCollapsed] = useState(false);
-  const [activeTrip, setActiveTrip] = useState(null);
-  const [stopInfo, setstopInfo] = useState(null);
+  const [state, dispatch] = useHomeReducer();
+  const { collapsed, activeTrip, stopInfo } = state;
+  const { toggleCollapsed, setActiveTrip, setStopInfo } = ACTIONS;
   const [getStopInfo, result, errorMessage, clearErrorMessage] = useStopInfo();
 
   useEffect(() => {
     if (!result) return;
-    setstopInfo(result);
+    dispatch({ type: setStopInfo, payload: result });
   }, [result]);
 
   useEffect(() => {
@@ -44,8 +45,10 @@ function Home({ trips }) {
   }, []);
 
   const toggle = () => {
-    setCollapsed(!collapsed);
+    dispatch({ type: toggleCollapsed });
   };
+
+  const selectTrip = (trip) => dispatch({type:setActiveTrip, payload: trip })
 
   return (
     <Layout>
@@ -59,7 +62,7 @@ function Home({ trips }) {
         <AsideContent>
           <div>
             <Logo>Trips Map</Logo>
-            <Menu trips={trips} selectTrip={setActiveTrip} />
+            <Menu trips={trips} selectTrip={selectTrip} />
           </div>
           {activeTrip && <InfoTrip activeTrip={activeTrip} />}
         </AsideContent>
@@ -72,7 +75,7 @@ function Home({ trips }) {
         <Content collapsed={collapsed ? 1 : 0}>
           <Modal
             visible={!!stopInfo}
-            onCancel={() => setstopInfo(null)}
+            onCancel={() => dispatch({type: setStopInfo, payload: null})}
             data={stopInfo}
           />
           <MapView
