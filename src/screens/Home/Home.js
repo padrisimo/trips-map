@@ -26,7 +26,12 @@ function Home({ trips }) {
   const [state, dispatch] = useHomeReducer();
   const { collapsed, activeTrip, stopInfo } = state;
   const { toggleCollapsed, setActiveTrip, setStopInfo } = ACTIONS;
-  const [getStopInfo, result, errorMessage, clearErrorMessage] = useStopInfo();
+  const {
+    getStopInfo,
+    result,
+    errorMessage,
+    clearErrorMessage
+  } = useStopInfo();
 
   useEffect(() => {
     if (!result) return;
@@ -48,7 +53,7 @@ function Home({ trips }) {
     dispatch({ type: toggleCollapsed });
   };
 
-  const selectTrip = (trip) => dispatch({type:setActiveTrip, payload: trip })
+  const selectTrip = (trip) => dispatch({ type: setActiveTrip, payload: trip });
 
   return (
     <Layout>
@@ -75,7 +80,7 @@ function Home({ trips }) {
         <Content collapsed={collapsed ? 1 : 0}>
           <Modal
             visible={!!stopInfo}
-            onCancel={() => dispatch({type: setStopInfo, payload: null})}
+            onCancel={() => dispatch({ type: setStopInfo, payload: null })}
             data={stopInfo}
           />
           <MapView
