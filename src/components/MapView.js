@@ -44,7 +44,7 @@ const MapView = memo(function MapView({
             strokeColor={colors.russian}
             strokeOpacity={1.0}
             strokeWeight={2}
-            key='line'
+            key="line"
           />,
           <Marker
             position={{
