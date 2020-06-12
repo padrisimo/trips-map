@@ -12,7 +12,11 @@ You need to create a __.env__ file in the root directory and paste your google m
 
 To run project on browser:
 
-`yarn start` or `npm i`
+`yarn start` or `npm start`
+
+To run unit testing:
+
+`yarn test --verbose` or `npm run test`
 
 ### Demo
 
