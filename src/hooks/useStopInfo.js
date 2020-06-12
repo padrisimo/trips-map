@@ -20,5 +20,5 @@ export default () => {
     setErrorMessage('');
   };
 
-  return [getStopInfo, result, errorMessage, clearErrorMessage];
+  return { getStopInfo, result, errorMessage, clearErrorMessage };
 };

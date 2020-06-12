@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { Map, GoogleApiWrapper, Marker, Polyline } from 'google-maps-react';
 import styled from 'styled-components';
 import { ARC } from 'constants/vars';
 import colors from 'constants/colors';
 import usePathLine from 'hooks/usePathLine';
 
-function MapView({ google, activeTrip, handleMarkerClick }) {
+const MapView = memo(function MapView({
+  google,
+  activeTrip,
+  handleMarkerClick
+}) {
   const [getPathCoords, path] = usePathLine();
 
   useEffect(() => {
@@ -33,34 +37,35 @@ function MapView({ google, activeTrip, handleMarkerClick }) {
 
   return (
     <Container>
-      {activeTrip ? (
-        <GoogleMap google={google} center={renderCenter} initialCenter={ARC}>
+      <GoogleMap google={google} center={renderCenter} initialCenter={ARC}>
+        {activeTrip && [
           <Polyline
             path={path}
             strokeColor={colors.russian}
             strokeOpacity={1.0}
             strokeWeight={2}
-          />
+            key="line"
+          />,
           <Marker
             position={{
               lat: activeTrip.destination.point._latitude,
               lng: activeTrip.destination.point._longitude
             }}
-          />
-          {renderStopMarkers()}
+            key="start"
+          />,
+          renderStopMarkers(),
           <Marker
             position={{
               lat: activeTrip.origin.point._latitude,
               lng: activeTrip.origin.point._longitude
             }}
+            key="end"
           />
-        </GoogleMap>
-      ) : (
-        <GoogleMap google={google} initialCenter={ARC} />
-      )}
+        ]}
+      </GoogleMap>
     </Container>
   );
-}
+});
 
 const Container = styled.div`
   width: 100%;
