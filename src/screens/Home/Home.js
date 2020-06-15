@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 
-import useStopInfo from 'hooks/useStopInfo';
-import { useHomeReducer, ACTIONS } from 'hooks/useHomeReducer';
+import useStopInfo from "hooks/useStopInfo";
+import { useHomeReducer, ACTIONS } from "hooks/useHomeReducer";
 
-import Menu from 'components/Menu';
-import Logo from 'components/Logo';
-import Trigger from 'components/Trigger';
-import Avatar from 'components/Avatar';
+import Menu from "components/Menu";
+import Logo from "components/Logo";
+import Trigger from "components/Trigger";
+import Avatar from "components/Avatar";
 import {
   Main,
   Header,
@@ -14,13 +14,13 @@ import {
   Aside,
   AsideContent,
   Content
-} from 'components/Layout';
-import MapView from 'components/MapView';
-import InfoTrip from 'components/InfoTrip';
-import Modal from 'components/Modal';
-import StopErrorMsg from 'components/StopErrorMsg';
+} from "components/Layout";
+import MapView from "components/MapView";
+import InfoTrip from "components/InfoTrip";
+import Modal from "components/Modal";
+import StopErrorMsg from "components/StopErrorMsg";
 
-import profile from 'constants/profile';
+import profile from "constants/profile";
 
 function Home({ trips }) {
   const [state, dispatch] = useHomeReducer();
@@ -44,7 +44,7 @@ function Home({ trips }) {
     clearErrorMessage();
   }, [errorMessage]);
 
-  const handleMarkerClick = useCallback((stopId) => {
+  const handleMarkerClick = useCallback(stopId => {
     if (!stopId) return;
     getStopInfo(stopId);
   }, []);
@@ -53,7 +53,7 @@ function Home({ trips }) {
     dispatch({ type: toggleCollapsed });
   };
 
-  const selectTrip = (trip) => dispatch({ type: setActiveTrip, payload: trip });
+  const selectTrip = trip => dispatch({ type: setActiveTrip, payload: trip });
 
   return (
     <Layout>
